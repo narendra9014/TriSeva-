@@ -1,0 +1,9 @@
+RewriteEngine On
+
+# 1. Automatically strip 'www.' to keep the default SSL active
+RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+
+# 2. Automatically force standard HTTP traffic into HTTPS encryption
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
